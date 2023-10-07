@@ -1,0 +1,6 @@
+<div *ngIf="isLoading; else elseBlock" class="flex justify-content-center">
+  <p-progressSpinner></p-progressSpinner>
+</div>
+<ng-template #elseBlock>
+  <p>Hello, {{ user?.firstName }} {{ user?.lastName }}</p>
+</ng-template>
