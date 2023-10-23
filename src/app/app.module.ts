@@ -9,6 +9,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardModule } from 'primeng/card';
 import { TopMenuComponent } from './core/layout/top-menu/top-menu.component';
 import { BaseUrlInterceptor } from './core/interceptors/base-url.interceptor';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +21,8 @@ import { BaseUrlInterceptor } from './core/interceptors/base-url.interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    ToastModule,
+    ConfirmDialogModule,
     CardModule,
     TopMenuComponent,
   ],
@@ -31,6 +37,9 @@ import { BaseUrlInterceptor } from './core/interceptors/base-url.interceptor';
       useClass: BaseUrlInterceptor,
       multi: true,
     },
+    DialogService,
+    MessageService,
+    ConfirmationService,
   ],
   bootstrap: [AppComponent],
 })

@@ -21,6 +21,11 @@ export class TopMenuComponent implements OnInit, OnDestroy {
       routerLink: '/',
     },
     {
+      label: $localize`Users`,
+      icon: 'pi pi-fw pi-users',
+      routerLink: '/users',
+    },
+    {
       label: $localize`Profile`,
       icon: 'pi pi-fw pi-user',
       routerLink: '/profile',

@@ -1,0 +1,51 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div class="flex flex-column align-items-center gap-3">
+    <input
+      pInputText
+      formControlName="email"
+      i18n-placeholder
+      placeholder="Email"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          formGroup.get('email')?.invalid && formGroup.get('email')?.touched
+      }"
+    />
+    <p-password
+      formControlName="password"
+      [feedback]="false"
+      i18n-placeholder
+      placeholder="Password"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          formGroup.get('password')?.invalid &&
+          formGroup.get('password')?.touched
+      }"
+    ></p-password>
+    <input
+      pInputText
+      formControlName="firstName"
+      i18n-placeholder
+      placeholder="First name"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          formGroup.get('email')?.invalid && formGroup.get('email')?.touched
+      }"
+    />
+    <input
+      pInputText
+      formControlName="lastName"
+      i18n-placeholder
+      placeholder="Last name"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          formGroup.get('email')?.invalid && formGroup.get('email')?.touched
+      }"
+    />
+    <p-button
+      type="submit"
+      i18n-label
+      label="Save"
+      [loading]="isSubmitting"
+    ></p-button>
+  </div>
+</form>
