@@ -27,10 +27,22 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 export class CreateUserFormComponent {
   isSubmitting = false;
   formGroup = new FormGroup({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    firstName: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    lastName: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
   });
 
   constructor(
@@ -43,15 +55,8 @@ export class CreateUserFormComponent {
     if (this.formGroup.invalid || this.isSubmitting) {
       return;
     }
-    this.userService
-      .create({
-        email: this.formGroup.value.email!,
-        password: this.formGroup.value.password!,
-        firstName: this.formGroup.value.firstName!,
-        lastName: this.formGroup.value.lastName!,
-      })
-      .subscribe(() => {
-        this.ref.close(true);
-      });
+    this.userService.create(this.formGroup.getRawValue()).subscribe(() => {
+      this.ref.close(true);
+    });
   }
 }

@@ -28,8 +28,14 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   formGroup = new FormGroup({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    username: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
   });
   isSubmitting = false;
 
@@ -44,18 +50,13 @@ export class LoginComponent {
       return;
     }
     this.isSubmitting = true;
-    this.authService
-      .login({
-        username: this.formGroup.value.username!,
-        password: this.formGroup.value.password!,
-      })
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/profile']);
-        },
-        error: () => {
-          this.isSubmitting = false;
-        },
-      });
+    this.authService.login(this.formGroup.getRawValue()).subscribe({
+      next: () => {
+        this.router.navigate(['/profile']);
+      },
+      error: () => {
+        this.isSubmitting = false;
+      },
+    });
   }
 }

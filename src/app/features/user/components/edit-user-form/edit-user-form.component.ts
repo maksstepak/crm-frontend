@@ -29,23 +29,21 @@ import { PasswordModule } from 'primeng/password';
 export class EditUserFormComponent {
   isSubmitting = false;
   formGroup = new FormGroup({
-    firstName: new FormControl(
-      this.config.data.user.firstName,
-      Validators.required,
-    ),
-    lastName: new FormControl(
-      this.config.data.user.lastName,
-      Validators.required,
-    ),
+    firstName: new FormControl<string>(this.config.data.user.firstName, {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    lastName: new FormControl(this.config.data.user.lastName, {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
   });
 
   constructor(
     private userService: UserService,
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-  ) {
-    console.log(this.config.data);
-  }
+  ) {}
 
   onSubmit() {
     this.formGroup.markAllAsTouched();
@@ -53,10 +51,7 @@ export class EditUserFormComponent {
       return;
     }
     this.userService
-      .update(this.config.data.user.id, {
-        firstName: this.formGroup.value.firstName!,
-        lastName: this.formGroup.value.lastName!,
-      })
+      .update(this.config.data.user.id, this.formGroup.getRawValue())
       .subscribe(() => {
         this.ref.close(true);
       });
