@@ -1,0 +1,28 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div class="flex flex-column gap-3">
+    <input
+      pInputText
+      formControlName="name"
+      i18n-placeholder
+      placeholder="Name"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          formGroup.get('name')?.invalid && formGroup.get('name')?.touched
+      }"
+    />
+    <p-dropdown
+      formControlName="size"
+      [options]="sizes"
+      optionLabel="label"
+      optionValue="value"
+      appendTo="body"
+    ></p-dropdown>
+    <p-button
+      class="align-self-center"
+      type="submit"
+      i18n-label
+      label="Save"
+      [loading]="isSubmitting"
+    ></p-button>
+  </div>
+</form>
