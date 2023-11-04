@@ -10,7 +10,7 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
-import { CompanySize } from '../../models/company.model';
+import { Company, CompanySize } from '../../models/company.model';
 import { CompanyService } from '../../services/company.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
@@ -30,11 +30,11 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 export class EditCompanyFormComponent {
   isSubmitting = false;
   formGroup = new FormGroup({
-    name: new FormControl<string>(this.config.data.company.name, {
+    name: new FormControl(this.config.data!.company.name, {
       nonNullable: true,
       validators: Validators.required,
     }),
-    size: new FormControl<CompanySize>(this.config.data.company.size, {
+    size: new FormControl(this.config.data!.company.size, {
       nonNullable: true,
     }),
   });
@@ -47,7 +47,7 @@ export class EditCompanyFormComponent {
   constructor(
     private companyService: CompanyService,
     public ref: DynamicDialogRef,
-    public config: DynamicDialogConfig,
+    public config: DynamicDialogConfig<{ company: Company }>,
   ) {}
 
   onSubmit() {
@@ -56,7 +56,7 @@ export class EditCompanyFormComponent {
       return;
     }
     this.companyService
-      .update(this.config.data.company.id, this.formGroup.getRawValue())
+      .update(this.config.data!.company.id, this.formGroup.getRawValue())
       .subscribe(() => {
         this.ref.close(true);
       });

@@ -55,6 +55,7 @@ export class CreateUserFormComponent {
     if (this.formGroup.invalid || this.isSubmitting) {
       return;
     }
+    this.isSubmitting = true;
     this.userService.create(this.formGroup.getRawValue()).subscribe(() => {
       this.ref.close(true);
     });

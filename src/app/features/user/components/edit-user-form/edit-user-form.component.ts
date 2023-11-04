@@ -12,6 +12,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { User } from '../../../../core/models/user.model';
 
 @Component({
   selector: 'app-edit-user-form',
@@ -29,11 +30,11 @@ import { PasswordModule } from 'primeng/password';
 export class EditUserFormComponent {
   isSubmitting = false;
   formGroup = new FormGroup({
-    firstName: new FormControl<string>(this.config.data.user.firstName, {
+    firstName: new FormControl(this.config.data!.user.firstName, {
       nonNullable: true,
       validators: Validators.required,
     }),
-    lastName: new FormControl(this.config.data.user.lastName, {
+    lastName: new FormControl(this.config.data!.user.lastName, {
       nonNullable: true,
       validators: Validators.required,
     }),
@@ -42,7 +43,7 @@ export class EditUserFormComponent {
   constructor(
     private userService: UserService,
     public ref: DynamicDialogRef,
-    public config: DynamicDialogConfig,
+    public config: DynamicDialogConfig<{ user: User }>,
   ) {}
 
   onSubmit() {
@@ -50,8 +51,9 @@ export class EditUserFormComponent {
     if (this.formGroup.invalid || this.isSubmitting) {
       return;
     }
+    this.isSubmitting = true;
     this.userService
-      .update(this.config.data.user.id, this.formGroup.getRawValue())
+      .update(this.config.data!.user.id, this.formGroup.getRawValue())
       .subscribe(() => {
         this.ref.close(true);
       });

@@ -54,6 +54,7 @@ export class CreateCompanyFormComponent {
     if (this.formGroup.invalid || this.isSubmitting) {
       return;
     }
+    this.isSubmitting = true;
     this.companyService.create(this.formGroup.getRawValue()).subscribe(() => {
       this.ref.close(true);
     });
