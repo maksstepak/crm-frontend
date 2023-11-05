@@ -9,15 +9,23 @@ import { TagModule } from 'primeng/tag';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EditCompanyFormComponent } from '../../components/edit-company-form/edit-company-form.component';
+import { CompanyContactListComponent } from '../../components/company-contact-list/company-contact-list.component';
 
 @Component({
   selector: 'app-company',
   standalone: true,
-  imports: [CommonModule, ProgressSpinnerModule, ButtonModule, TagModule],
+  imports: [
+    CommonModule,
+    ProgressSpinnerModule,
+    ButtonModule,
+    TagModule,
+    CompanyContactListComponent,
+  ],
   templateUrl: './company.component.html',
 })
 export class CompanyComponent implements OnInit, OnDestroy {
   isLoading = true;
+  companyId!: number;
   company!: Company;
   editCompanyFormRef: DynamicDialogRef | undefined;
 
@@ -28,7 +36,9 @@ export class CompanyComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-  ) {}
+  ) {
+    this.companyId = +this.route.snapshot.paramMap.get('companyId')!;
+  }
 
   ngOnInit(): void {
     this.loadCompany();
@@ -36,8 +46,7 @@ export class CompanyComponent implements OnInit, OnDestroy {
 
   loadCompany() {
     this.isLoading = true;
-    const companyId = +this.route.snapshot.paramMap.get('companyId')!;
-    this.companyService.getById(companyId).subscribe((company) => {
+    this.companyService.getById(this.companyId).subscribe((company) => {
       this.company = company;
       this.isLoading = false;
     });

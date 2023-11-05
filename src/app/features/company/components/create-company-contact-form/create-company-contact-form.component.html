@@ -1,0 +1,40 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div class="flex flex-column gap-3">
+    <input
+      pInputText
+      formControlName="firstName"
+      i18n-placeholder
+      placeholder="First name"
+    />
+    <input
+      pInputText
+      formControlName="lastName"
+      i18n-placeholder
+      placeholder="Last name"
+    />
+    <input
+      pInputText
+      formControlName="email"
+      i18n-placeholder
+      placeholder="Email"
+    />
+    <input
+      pInputText
+      formControlName="phoneNumber"
+      i18n-placeholder
+      placeholder="Phone number"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          formGroup.get('phoneNumber')?.invalid &&
+          formGroup.get('phoneNumber')?.touched
+      }"
+    />
+    <p-button
+      class="align-self-center"
+      type="submit"
+      i18n-label
+      label="Save"
+      [loading]="isSubmitting"
+    ></p-button>
+  </div>
+</form>
